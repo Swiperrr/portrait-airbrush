@@ -19,6 +19,13 @@ from PIL import Image
 
 import retouch
 
+try:  # Hugging Face ZeroGPU Spaces need the main function marked; elsewhere a no-op
+    import spaces
+    gpu_task = spaces.GPU(duration=120)
+except ImportError:
+    def gpu_task(fn):
+        return fn
+
 PREVIEW_SIZE = 1600  # longest side of the on-page previews; downloads stay full size
 KEEP_SECONDS = 3600  # uploads and results are deleted after this long
 
@@ -41,6 +48,7 @@ def _preview(path, outdir):
     return p
 
 
+@gpu_task
 def run(upload, progress=gr.Progress()):
     if upload is None:
         raise gr.Error("Upload a photo first.")

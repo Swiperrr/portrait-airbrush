@@ -2,6 +2,8 @@
 
 Upload a portrait and get three retouched versions (subtle, medium and strong), plus a side-by-side comparison. The skin gets a smooth, magazine-style finish that still looks like a real photograph.
 
+**Try it online:** https://huggingface.co/spaces/swiperrr/portrait-airbrush
+
 It uses classical image processing only. There is no generative AI, no inpainting and no face reshaping. MediaPipe is used only to find the face and to tell skin from hair and clothes.
 
 ## Run it
