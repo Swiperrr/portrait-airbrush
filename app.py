@@ -7,9 +7,12 @@ versions and a side-by-side comparison.
     .venv/bin/python app.py --share    # also prints a temporary public link
 """
 import argparse
+import glob
 import os
 import re
+import shutil
 import tempfile
+import time
 
 import gradio as gr
 from PIL import Image
@@ -17,6 +20,17 @@ from PIL import Image
 import retouch
 
 PREVIEW_SIZE = 1600  # longest side of the on-page previews; downloads stay full size
+KEEP_SECONDS = 3600  # uploads and results are deleted after this long
+
+
+def _clean_old():
+    cutoff = time.time() - KEEP_SECONDS
+    for d in glob.glob(os.path.join(tempfile.gettempdir(), "airbrush_*")):
+        try:
+            if os.path.getmtime(d) < cutoff:
+                shutil.rmtree(d, ignore_errors=True)
+        except OSError:
+            pass
 
 
 def _preview(path, outdir):
@@ -30,6 +44,7 @@ def _preview(path, outdir):
 def run(upload, progress=gr.Progress()):
     if upload is None:
         raise gr.Error("Upload a photo first.")
+    _clean_old()
     path = upload if isinstance(upload, str) else upload.name
     base = re.sub(r"[^A-Za-z0-9_-]+", "_", os.path.splitext(os.path.basename(path))[0]) or "photo"
     outdir = tempfile.mkdtemp(prefix="airbrush_")
@@ -52,13 +67,14 @@ def run(upload, progress=gr.Progress()):
     return files["comparison"], gallery, downloads
 
 
-with gr.Blocks(title="Portrait Airbrush") as demo:
+with gr.Blocks(title="Portrait Airbrush", delete_cache=(KEEP_SECONDS, KEEP_SECONDS)) as demo:
     gr.Markdown(
         "# Portrait Airbrush\n"
         "Upload a portrait. You get three versions (subtle, medium, strong) with a "
         "smooth, magazine-style skin finish that still looks like a real photo, plus a comparison.\n\n"
         "Classical image processing only: no AI generation and no reshaping. "
-        "Full resolution and the original colour profile are kept."
+        "Full resolution and the original colour profile are kept. "
+        "Photos are deleted from the server within about an hour."
     )
     with gr.Row():
         with gr.Column(scale=1):
