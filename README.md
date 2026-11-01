@@ -9,7 +9,7 @@ It uses classical image processing only. There is no generative AI, no inpaintin
 You need Python 3.11.
 
 ```bash
-git clone <this repo>
+git clone https://github.com/Swiperrr/portrait-airbrush.git
 cd portrait-airbrush
 python3.11 -m venv .venv
 .venv/bin/pip install -r requirements.txt
