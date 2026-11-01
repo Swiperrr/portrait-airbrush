@@ -1,0 +1,7 @@
+opencv-contrib-python==5.0.0.93
+mediapipe==1.1.1
+numpy==2.4.6
+pillow==12.3.0
+pillow-heif==1.8.1
+gradio==6.31.0
+certifi==2026.10.23
