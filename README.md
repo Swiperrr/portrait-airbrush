@@ -13,11 +13,9 @@ Split the photo into two layers. This is called frequency separation, the main t
 One layer holds the colour and tone: blotches, redness, uneven patches.
 The other holds the fine texture: pores and tiny details.
 
-I smooth the colour layer but keep about half the texture. That’s why it doesn’t look plastic.
-
 Clean small spots. Small pimples and dark spots get blended away. Moles and freckles are left alone on purpose.
 Light touch-ups. Dark under-eye shadows are brightened a little, and extra redness is toned down slightly.
-Finishing. I blend the edit at about 80% strength so some of the original shows through, then add very fine film grain so the smoothed skin matches the rest of the photo.
+Finishing. The edit is blended at about 80% strength so some of the original shows through, then add very fine film grain so the smoothed skin matches the rest of the photo.
 ## Run it
 
 You need Python 3.11.
